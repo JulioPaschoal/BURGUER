@@ -60,7 +60,7 @@ API RESTful desenvolvida com Node.js e Express, seguindo a arquitetura MVC, com 
 
 > 🧹 Padronização de Código
 
-- O projeto utiliza BiomeJS
+- O projeto utiliza Eslint e Prettier
 
 - Formatação automática
 
