@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { v4 } from 'uuid';
 import * as Yup from 'yup';
 
@@ -8,7 +9,7 @@ class UserController {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string().email().required(),
-      password_hash: Yup.string().required(),
+      password: Yup.string().required(),
       admin: Yup.boolean(),
     });
     try {
@@ -16,11 +17,12 @@ class UserController {
     } catch (err) {
       return res.status(400).json({ errors: err.errors });
     }
-    const { name, email, password_hash, admin } = req.body;
+    const { name, email, password, admin } = req.body;
     const userExists = await User.findOne({ where: { email } });
     if (userExists) {
       return res.status(400).json({ message: 'Email already taken' });
     }
+    const password_hash = await bcrypt.hash(password, 8);
     const user = await User.create({
       id: v4(),
       name,
