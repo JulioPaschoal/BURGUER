@@ -9,21 +9,25 @@ class SessionController {
       email: Yup.string().email().required(),
       password: Yup.string().min(6).required(),
     });
+    const emailOrPasswordIncorrect = () => {
+      return res.status(401).json({ error: 'Email or password is incorrect' });
+    };
     const isValid = await schema.isValid(req.body, { strict: true });
     if (!isValid) {
-      return res.status(400).json({ error: 'Email or password is required' });
+      return emailOrPasswordIncorrect();
     }
+
     const { email, password } = req.body;
     const existsUser = await User.findOne({ where: { email } });
     if (!existsUser) {
-      return res.status(401).json({ error: 'Email or password is incorrect' });
+      return emailOrPasswordIncorrect();
     }
     const isPasswordValid = await bcrypt.compare(
       password,
       existsUser.password_hash,
     );
     if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Email or password is incorrect' });
+      return emailOrPasswordIncorrect();
     }
     return res.status(200).json({
       id: existsUser.id,
