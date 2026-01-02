@@ -24,7 +24,7 @@ API RESTful desenvolvida com Node.js e Express, seguindo a arquitetura MVC, com 
 
 - Yup – Validação de dados
 
-- BiomeJS – Padronização e formatação de código
+- Eslint/Prettier – Padronização e formatação de código
 
 > 🧱 Arquitetura
 

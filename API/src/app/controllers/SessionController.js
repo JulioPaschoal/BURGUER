@@ -14,20 +14,20 @@ class SessionController {
     };
     const isValid = await schema.isValid(req.body, { strict: true });
     if (!isValid) {
-      return emailOrPasswordIncorrect();
+      emailOrPasswordIncorrect();
     }
 
     const { email, password } = req.body;
     const existsUser = await User.findOne({ where: { email } });
     if (!existsUser) {
-      return emailOrPasswordIncorrect();
+      emailOrPasswordIncorrect();
     }
     const isPasswordValid = await bcrypt.compare(
       password,
       existsUser.password_hash,
     );
     if (!isPasswordValid) {
-      return emailOrPasswordIncorrect();
+      emailOrPasswordIncorrect();
     }
     return res.status(200).json({
       id: existsUser.id,
