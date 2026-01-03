@@ -8,6 +8,12 @@ class Product extends Model {
         price: Sequelize.INTEGER,
         category: Sequelize.STRING,
         path: Sequelize.STRING,
+        url: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            return `${process.env.APP_URL}:4000/product-files/${this.path}`;
+          },
+        },
       },
       {
         sequelize,
