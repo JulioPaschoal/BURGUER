@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import * as Yup from 'yup';
 
 import User from '../model/User.js';
@@ -29,11 +30,17 @@ class SessionController {
     if (!isPasswordValid) {
       emailOrPasswordIncorrect();
     }
+
+    const token = jwt.sign({ id: existsUser.id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    });
+
     return res.status(200).json({
       id: existsUser.id,
       name: existsUser.name,
       email: existsUser.email,
       admin: existsUser.admin,
+      token,
     });
   }
 }
