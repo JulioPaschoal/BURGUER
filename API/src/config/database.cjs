@@ -1,10 +1,10 @@
 module.exports = {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_BASE,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  dialect: process.env.DB_DIALECT,
+  host: 'localhost',
+  port: 5432,
+  database: 'burguer-db',
+  username: 'admin',
+  password: '@505619',
+  dialect: 'postgres',
   define: {
     timestamps: true,
     underscored: true,
