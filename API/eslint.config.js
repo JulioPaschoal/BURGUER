@@ -18,6 +18,7 @@ export default defineConfig([
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
       '@typescript-eslint/no-explicit-any': 'off',
+      'no-unused-vars': 'off',
     },
   },
 ]);
