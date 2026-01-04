@@ -31,9 +31,13 @@ class SessionController {
       emailOrPasswordIncorrect();
     }
 
-    const token = jwt.sign({ id: existsUser.id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    });
+    const token = jwt.sign(
+      { id: existsUser.id, admin: existsUser.admin },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_EXPIRES_IN,
+      },
+    );
 
     return res.status(200).json({
       id: existsUser.id,
