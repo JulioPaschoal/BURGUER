@@ -6,6 +6,11 @@ class UserControllers {
   async store(req, res) {
     // RECEBENDO OS DADOS DO USUÁRIO \\
     const { name, email, password_hash, admin } = req.body;
+    // VERIFICANDO SE O E-MAIL JÁ EXISTE \\
+    const userExists = await User.findOne({ where: { email } });
+    if (userExists) {
+      return res.status(400).json({ error: 'User already exists' });
+    }
 
     // CRIANDO O USUÁRIO \\
     const user = await User.create({
