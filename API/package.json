@@ -11,6 +11,7 @@
   "author": "JULIO PASCHOAL",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "express": "^5.2.1",

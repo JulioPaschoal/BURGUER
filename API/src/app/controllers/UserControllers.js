@@ -2,6 +2,7 @@
 import User from '../model/User.js';
 import { v4 } from 'uuid';
 import * as yup from 'yup';
+import bcrypt from 'bcrypt';
 
 class UserControllers {
   async store(req, res) {
@@ -9,7 +10,7 @@ class UserControllers {
     const schema = yup.object().shape({
       name: yup.string().required(),
       email: yup.string().email().required(),
-      password_hash: yup.string().min(6).required(),
+      password: yup.string().min(6).required(),
       admin: yup.boolean(),
     });
     try {
@@ -19,13 +20,16 @@ class UserControllers {
     }
 
     // RECEBENDO OS DADOS DO USUÁRIO VALIDADOS \\
-    const { name, email, password_hash, admin } = req.body;
+    const { name, email, password, admin } = req.body;
 
     // VERIFICANDO SE O E-MAIL JÁ EXISTE \\
     const userExists = await User.findOne({ where: { email } });
     if (userExists) {
       return res.status(400).json({ error: 'User already exists' });
     }
+
+    // CRIPTOGRAFANDO A SENHA \\
+    const password_hash = await bcrypt.hash(password, 10);
 
     // CRIANDO O USUÁRIO \\
     const user = await User.create({
