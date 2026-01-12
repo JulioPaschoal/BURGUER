@@ -10,10 +10,15 @@ class SessionControllers {
       password: yup.string().min(6).required(),
     });
 
+    // MENSAGEM DE ERRO \\
+    const emailPasswordIncorrect = () => {
+      return res.status(400).json({ error: 'E-mail or password is incorrect' });
+    };
+
     // VALIDANDO OS DADOS DA SESSÃO \\
     const isValid = await schema.isValid(req.body);
     if (!isValid) {
-      return res.status(400).json({ error: 'E-mail or password is incorrect' });
+      emailPasswordIncorrect();
     }
 
     // RECEBENDO OS DADOS DA SESSÃO VALIDADOS \\
@@ -22,13 +27,13 @@ class SessionControllers {
     // VERIFICANDO SE O E-MAIL EXISTE \\
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(400).json({ error: 'E-mail or password is incorrect' });
+      emailPasswordIncorrect();
     }
 
     // VERIFICANDO SE A SENHA É VÁLIDA \\
     const passwordMatch = await bcrypt.compare(password, user.password_hash);
     if (!passwordMatch) {
-      return res.status(400).json({ error: 'E-mail or password is incorrect' });
+      emailPasswordIncorrect();
     }
 
     // RETORNANDO OS DADOS DO USUÁRIO LOGADO \\
