@@ -3,13 +3,23 @@
 import { Router } from 'express';
 import UserControllers from './app/controllers/UserControllers.js';
 import SessionControllers from './app/controllers/SessionControllers.js';
+import ProductControllers from './app/controllers/ProductControllers.js';
+import multerConfig from './config/multer.cjs';
+import multer from 'multer';
 
 const routes = new Router();
+
+// CONFIGURAÇÃO DE UPLOAD DE ARQUIVOS \\
+const upload = multer(multerConfig);
 
 // ROTAS DE USUÁRIO \\
 routes.post('/users', UserControllers.store);
 
 // ROTAS DE SESSÃO \\
 routes.post('/sessions', SessionControllers.store);
+
+// ROTAS DE PRODUTO \\
+routes.post('/products', upload.single('file'), ProductControllers.store);
+routes.get('/products', ProductControllers.index);
 
 export default routes;
