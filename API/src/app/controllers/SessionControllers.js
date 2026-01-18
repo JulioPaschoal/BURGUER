@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 import bcrypt from 'bcrypt';
 import User from '../model/User.js';
+import jwt from 'jsonwebtoken';
 
 class SessionControllers {
   async store(req, res) {
@@ -36,12 +37,18 @@ class SessionControllers {
       emailPasswordIncorrect();
     }
 
+    // GERANDO O TOKEN DE ACESSO \\
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    });
+
     // RETORNANDO OS DADOS DO USUÁRIO LOGADO \\
     return res.status(200).json({
       id: user.id,
       name: user.name,
       email: user.email,
       admin: user.admin,
+      token,
     });
   }
 }
