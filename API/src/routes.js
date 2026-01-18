@@ -1,5 +1,4 @@
 // CONFIGURAÇÃO DAS ROTAS \\
-
 import { Router } from 'express';
 import UserControllers from './app/controllers/UserControllers.js';
 import SessionControllers from './app/controllers/SessionControllers.js';
@@ -7,6 +6,7 @@ import ProductControllers from './app/controllers/ProductControllers.js';
 import multerConfig from './config/multer.cjs';
 import multer from 'multer';
 import authMiddleware from './middlewares/auth.js';
+import CategoryControllers from './app/controllers/CategoryControllers.js';
 
 const routes = new Router();
 
@@ -26,4 +26,7 @@ routes.use(authMiddleware);
 routes.post('/products', upload.single('file'), ProductControllers.store);
 routes.get('/products', ProductControllers.index);
 
+// ROTAS DE CATEGORIA \\
+routes.post('/categories', CategoryControllers.store);
+routes.get('/categories', CategoryControllers.index);
 export default routes;

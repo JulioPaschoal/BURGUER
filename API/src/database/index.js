@@ -5,9 +5,10 @@ import { Sequelize } from 'sequelize';
 import User from '../app/model/User.js';
 import databaseConfig from '../config/database.cjs';
 import Product from '../app/model/Product.js';
+import Category from '../app/model/Category.js';
 
 // PASSANDO AS CONFIGURAÇÕES DO BANCO DE DADOS \\
-const models = [User, Product];
+const models = [User, Product, Category];
 
 class Database {
   constructor() {
