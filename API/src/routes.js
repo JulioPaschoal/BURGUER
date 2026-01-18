@@ -6,6 +6,7 @@ import SessionControllers from './app/controllers/SessionControllers.js';
 import ProductControllers from './app/controllers/ProductControllers.js';
 import multerConfig from './config/multer.cjs';
 import multer from 'multer';
+import authMiddleware from './middlewares/auth.js';
 
 const routes = new Router();
 
@@ -17,6 +18,9 @@ routes.post('/users', UserControllers.store);
 
 // ROTAS DE SESSÃO \\
 routes.post('/sessions', SessionControllers.store);
+
+// ROTAS PROTEGIDAS \\
+routes.use(authMiddleware);
 
 // ROTAS DE PRODUTO \\
 routes.post('/products', upload.single('file'), ProductControllers.store);
