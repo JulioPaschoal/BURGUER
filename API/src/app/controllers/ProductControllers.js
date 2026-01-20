@@ -27,6 +27,7 @@ class ProductControllers {
       category,
       path: filename,
     });
+
     return res.status(201).json(product);
   }
 
