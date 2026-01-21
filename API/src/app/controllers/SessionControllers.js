@@ -38,9 +38,13 @@ class SessionControllers {
     }
 
     // GERANDO O TOKEN DE ACESSO \\
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    });
+    const token = jwt.sign(
+      { id: user.id, admin: user.admin },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_EXPIRES_IN,
+      },
+    );
 
     // RETORNANDO OS DADOS DO USUÁRIO LOGADO \\
     return res.status(200).json({
