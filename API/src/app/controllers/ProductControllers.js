@@ -1,6 +1,7 @@
 // CONFIGURAÇÃO DO CONTROLLER DE PRODUTO \\
 import * as yup from 'yup';
 import Product from '../model/Product.js';
+import Category from '../model/Category.js';
 
 class ProductControllers {
   // VALIDANDO OS DADOS DO PRODUTO \\
@@ -8,7 +9,7 @@ class ProductControllers {
     const schema = yup.object().shape({
       name: yup.string().required(),
       price: yup.number().required(),
-      category: yup.string().required(),
+      category_id: yup.number().required(),
     });
     try {
       schema.validateSync(req.body, { abortEarly: false });
@@ -17,14 +18,14 @@ class ProductControllers {
     }
 
     // RECEBENDO OS DADOS DO PRODUTO VALIDADOS \\
-    const { name, price, category } = req.body;
+    const { name, price, category_id } = req.body;
     const { filename } = req.file;
 
     // CRIANDO O PRODUTO \\
     const product = await Product.create({
       name,
       price,
-      category,
+      category_id,
       path: filename,
     });
 
@@ -33,9 +34,16 @@ class ProductControllers {
 
   // LISTANDO TODOS OS PRODUTOS \\
   async index(req, res) {
-    const products = await Product.findAll();
+    const products = await Product.findAll({
+      include: {
+        model: Category,
+        as: 'category',
+        attributes: ['id', 'name'],
+      },
+    });
     return res.status(200).json(products);
   }
+  //
 }
 
 export default new ProductControllers();
