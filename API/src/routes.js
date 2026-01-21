@@ -30,6 +30,12 @@ routes.post(
   upload.single('file'),
   ProductControllers.store,
 );
+routes.put(
+  '/products/:id',
+  adminMiddleware,
+  upload.single('file'),
+  ProductControllers.update,
+);
 routes.get('/products', ProductControllers.index);
 
 // ROTAS DE CATEGORIA \\
