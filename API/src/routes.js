@@ -39,6 +39,11 @@ routes.put(
 routes.get('/products', ProductControllers.index);
 
 // ROTAS DE CATEGORIA \\
-routes.post('/categories', adminMiddleware, CategoryControllers.store);
+routes.post(
+  '/categories',
+  upload.single('file'),
+  adminMiddleware,
+  CategoryControllers.store,
+);
 routes.get('/categories', CategoryControllers.index);
 export default routes;

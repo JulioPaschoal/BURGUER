@@ -8,26 +8,22 @@ class CategoryControllers {
     const schema = yup.object().shape({
       name: yup.string().required(),
     });
-
     // RECEBENDO OS DADOS DA CATEGORIA VALIDADOS \\
     const { name } = req.body;
-
+    const { filename } = req.file;
     // VERIFICANDO SE A CATEGORIA JÁ EXISTE \\
     const categoryExists = await Category.findOne({ where: { name } });
     if (categoryExists) {
       return res.status(400).json({ error: 'Category already exists' });
     }
-
     // VALIDANDO OS DADOS DA CATEGORIA \\
     try {
       await schema.validateSync(req.body, { abortEarly: false, strict: true });
     } catch (err) {
       return res.status(400).json({ error: err.errors });
     }
-
     // CRIANDO A CATEGORIA \\
-    const category = await Category.create({ name });
-
+    const category = await Category.create({ name, path: filename });
     // RETORNANDO A CATEGORIA CRIADA \\
     return res.status(201).json(category);
   }

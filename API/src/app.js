@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // ROTAS DE ARQUIVOS \\
 app.use('/product-file', fileRouteConfig);
+app.use('/category-file', fileRouteConfig);
 
 // ROTAS \\
 app.use(routes);
