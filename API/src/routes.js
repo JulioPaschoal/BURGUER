@@ -8,6 +8,7 @@ import multer from 'multer';
 import authMiddleware from './middlewares/auth.js';
 import CategoryControllers from './app/controllers/CategoryControllers.js';
 import adminMiddleware from './middlewares/admin.js';
+import OrderController from './app/controllers/OrderController.js';
 
 const routes = new Router();
 
@@ -53,3 +54,6 @@ routes.put(
 );
 routes.get('/categories', CategoryControllers.index);
 export default routes;
+
+// RATA DE PEDIDOS \\
+routes.post('/orders', OrderController.store);

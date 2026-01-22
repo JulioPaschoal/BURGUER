@@ -39,7 +39,7 @@ class SessionControllers {
 
     // GERANDO O TOKEN DE ACESSO \\
     const token = jwt.sign(
-      { id: user.id, admin: user.admin },
+      { id: user.id, admin: user.admin, name: user.name },
       process.env.JWT_SECRET,
       {
         expiresIn: process.env.JWT_EXPIRES_IN,
