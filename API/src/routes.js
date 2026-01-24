@@ -53,7 +53,8 @@ routes.put(
   CategoryControllers.update,
 );
 routes.get('/categories', CategoryControllers.index);
-export default routes;
 
 // RATA DE PEDIDOS \\
 routes.post('/orders', OrderController.store);
+
+export default routes;
